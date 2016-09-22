@@ -1,18 +1,33 @@
 body {
-	background-color:lightblue;
+	background: lightblue;
+	background: linear-gradient(to right, blue, black);
 	padding: 0px;
 	border-width: 0px;
 	margin: 0px;
 }
-header, footer {
+header {
 	background-color:blue;
-	color: darkred;
+	color: white;
 	width: 100%;
 	padding: 0px;
 	border-width: 0px;
 	margin: 0px;
 	clear: left;
 }
+footer {
+	background-color:blue;
+	color: white;
+	position: fixed;
+	bottom: 0;
+	height: 100px;
+	width: 100%;
+	padding: 0px;
+	border-width: 0px;
+	margin: 0px;
+	clear: left;
+}
+
+
 nav {
 	background-color:blue;
 	color: black;
@@ -33,17 +48,58 @@ article {
 	padding: 0px;
 	border-width: 0px;
 	margin: 0px;
+	margin-top: 70px;
+	margin-bottom: 70px;
 	width: 700px ;
 	margin-left: auto ;
 	margin-right: auto ;
 }
 h1 {
 	margin: 0px;
+	margin-left: 70px;
+	font-family: verdana;
+}
+#sky {
+	color: white;
+	background: blue;
+	background: linear-gradient(lightblue, blue);
+}
+#sports {
+	color: white;
+	background: red;
+	background: linear-gradient(#FFDDDD, red);
 }
 h2 {
 	margin: 0px
 }
 p {
 	margin: 0px;
+	font-family: verdana;
 }
-
+footer p {
+	margin: 0px;
+	font-family: time-new-roman;
+}
+table {
+	width: 100%;
+	font-family: verdana;
+}
+th {
+	color: blue;
+	text-align: left;
+	font-weight: normal;
+}
+/* Table column widths set here */
+.fn {
+  width: 20%;
+}
+.ln {
+  width: 20%;
+}
+.em {
+  width: 32%;
+}
+.ac {
+  width: 18%;
+  text-align: right;
+}
