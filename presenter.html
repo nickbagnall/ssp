@@ -10,7 +10,7 @@
 </head>
 
 <header>
-<h1>SkyBet</h1>
+<h1><span id="sky">sky</span><span id="sports">SPORTISH</span></h1>
 </header>
 
 <article>
@@ -19,48 +19,52 @@
 <table>
 
 <tr>
-<td>First name</td>
-<td>Last name</td>
-<td>Email Address</td>
-<td></td>
+<th class="fn">First name</th>
+<th class="ln">Last name</th>
+<th class="em">Email Address</th>
+<th class="ac"></th>
 </tr>
 <tr>
 <td>Nick</td>
 <td>Bagnall</td>
 <td>Nick.Bagnall@example.org</td>
-<td><input type="submit" name=submit" value="update1"></td>
+<td class="ac"><button type="submit" name="submit" value="update1">Edit</button></td>
 </tr>
 <tr>
 <td>Eric</td>
 <td>Mann</td>
 <td>emann@example.org</td>
-<td><button type="submit" name="submit" value="update2">Edit</button></td>
+<td class="ac"><button type="submit" name="submit" value="update2">Edit</button></td>
 </tr>
 <tr>
 <td>Peter</td>
 <td>Pan</td>
 <td>peterpan@example.org</td>
-<td><input type="submit" name=submit" value="update3"><input type="submit" name="submit" value='delete3'></td>
+<td class="ac"><button type="submit" name="submit" value="update3">Edit</button></td>
 </tr>
 </table>
 </form>
 
-
-<p>If you wish to add a new presenter please enter the details below</p>
+</br>
+<p>Add a new presenter</p>
 
 <form name="createNew" onsubmit="return validate()" method="post" action="confirm.html">
 <table>
 <tr>
-<td><input type="text" name="firstname" size="20" maxlength="25"></td>
-<td><input type="text" name="lastname" id="lastname" size="20" maxlength="25"></td>
-<td><input type="submit" name="submit" value='CreateNew'></td>
+<td class="fn"><input type="text" name="firstname" size="20" maxlength="25"></td>
+<td class="ln"><input type="text" name="lastname" id="lastname" size="20" maxlength="25"></td>
+<td class="em"><input type="text" name="email" id="email" size="40" maxlength="50"></td>
+<td class="ac"><input type="submit" name="submit" value='CreateNew'></td>
 </tr>
 </table>
 </form>
 </article>
 
 <footer>
-<p> This section to contain my contact details</p>
+<p>About Us</p>
+<p>Privacy and Cookies Notices</p>
+<p>Terms and Conditions</p>
+<p>Accessibility</p>
 </footer>
 </body>
 </html>
