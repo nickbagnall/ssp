@@ -36,15 +36,16 @@ public class FileRW {
 	     * @param filename
 	     * @return
 	     */
-	    public static List<Presenter> readPresenterFile(String filename) {
+	    public static List<SkySportPresenter> readPresenterFile(String filename) {
 		    
-	    	List<Presenter> presenterList = new ArrayList<Presenter>();
-	    	Presenter tempPresenter = null;
+	    	List<SkySportPresenter> presenterList = new ArrayList<SkySportPresenter>();
+	    	SkySportPresenter tempPresenter = null;
 		    String presenterData = null;
 	    	
 	        try {
 	            File presenterDataFile = new File(filename);
 	            if (presenterDataFile.exists()) {
+	            	System.out.println("Reading file >>" + presenterDataFile.getAbsolutePath() + "<<");
 	            	FileReader presenterFileReader = new FileReader(presenterDataFile);
 	            	BufferedReader presenterReader = new BufferedReader(presenterFileReader);
 
@@ -53,7 +54,8 @@ public class FileRW {
 	            
 	            	//Read all lines
 	            	while (presenterData != null) {
-	            		tempPresenter = new Presenter();
+	            		tempPresenter = new SkySportPresenter();
+	            		System.out.println("Read >>" + presenterData + "<<");
 	            		tempPresenter.parsePresenterString(presenterData);
 	            		if (tempPresenter.isValid()) {
 	            			presenterList.add(tempPresenter);
@@ -85,13 +87,13 @@ public class FileRW {
 	     * @param PresenterList
 	     * @return
 	     */
-	    public static int writePresenterFile(String filename, String tempFilename, List<Presenter> PresenterList) {
+	    public static int writePresenterFile(String filename, String tempFilename, List<SkySportPresenter> PresenterList) {
 	    	
 	    	File tempPresenterDataFile = null;
 	    	FileWriter tempFileWriter = null;
 	    	BufferedWriter tempWriter = null;
-	    	Presenter tempPresenter = null;
-	    	Iterator<Presenter> i = null; 
+	    	SkySportPresenter tempPresenter = null;
+	    	Iterator<SkySportPresenter> i = null; 
 	    	
 	    	int response = 0;
 	    	
