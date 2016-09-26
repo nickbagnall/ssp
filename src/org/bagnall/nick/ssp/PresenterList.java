@@ -1,6 +1,7 @@
 package org.bagnall.nick.ssp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PresenterList {
@@ -27,7 +28,25 @@ public class PresenterList {
 		//List<SkySportPresenter> skySportPresenters = this.getPresenters();
 	}
 	
-	public int getSize() {
-		return presenters.size();
+	/**
+	 * Find the next available unique ID
+	 * 
+	 * @return
+	 */
+	public String nextId() {
+		//Find a unique id and set it on the object
+        Iterator<SkySportPresenter> i = presenters.iterator();
+        SkySportPresenter temp = null;
+        int maxId = 0;
+        int tempId = 0;
+        while (i.hasNext()) {
+               temp = i.next();
+               tempId = Integer.parseInt(temp.getId());
+               if (tempId > maxId) {
+                      maxId = tempId;
+               }
+        }
+        maxId++;
+        return String.valueOf(maxId);
 	}
 }
