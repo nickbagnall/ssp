@@ -25,13 +25,14 @@
 </nav>
 
 <article>
-<p>Editing presenter</p>
+<h2>Editing presenter</h2>
+
 <c:if test="${requestScope.presenter eq null }">
-<p>Attempted to edit nothing - error.</p>
+<p>Error : <c:out value="${requestScope.message}"></c:out></p>
 </c:if>
 
 <c:if test="${requestScope.presenter ne null }">
-<form action="/SSP/Confirm" method="post" name="update" onsubmit="return validateUpdate()">
+<form action="/SSP/Confirm" method="post" name="update" onsubmit="return validateUpdate();">
 <table>
 
 <c:set var="presenter" value="${requestScope.presenter}" />
@@ -47,8 +48,9 @@
 </form>
 </c:if>
 
+<p>&nbsp;</p>
 <form action="/SSP/Presenter" method="post" name="start">
-<button type="submit" name="submit" value="cancel">Cancel</button>
+<p class="right"><button type="submit" name="submit" value="cancel">Cancel</button></p>
 </form>
 
 </article>

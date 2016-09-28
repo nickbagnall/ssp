@@ -25,17 +25,12 @@
 </nav>
 
 <article>
-<p>Sky Sport Presenter Change Confirmation</p>
-<c:if test="${requestScope.success eq true }">
-<p>The changes have been applied.</p>
-</c:if>
-
-<c:if test="${requestScope.success ne true }">
-<p>The changes were not applied.</p>
-</c:if>
+<h2>Sky Sport Presenter Change Confirmation</h2>
+<p><c:out value="${requestScope.message}"></c:out></p>
+<p>&nbsp;</p>
 
 <form action="/SSP/Presenter" method="post" name="start">
-<button type="submit" name="submit" value="complete">Ok</button>
+<p class="right"><button type="submit" name="submit" value="complete">Ok</button></p>
 </form>
 
 
