@@ -25,18 +25,17 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("Start of Confirm Servlet");
+		String message = null;
 		
-		String success = "false";
+		//Access the presenter data file and create a list of presenters
 		String dataPath = this.getServletContext().getRealPath("/sspdata");
 		String dataFile = dataPath + "/ssp.dat";
-		String tempFile = dataPath + "/ssp.tmp";
-		//Retrieve Presenter List from session
-		PresenterList shortList = (PresenterList)request.getSession(true).getAttribute("presenterList");
+		String tempFile = dataPath + "/ssptemp.dat";
+		PresenterList shortList = new PresenterList(); 
+		shortList.setPresenters(FileRW.readPresenterFile(dataFile));
 		
 		//Determine the action
 		String action = request.getParameter("submit");
-		System.out.println(action);
 		
 		//There is no id number on a create request
 		String idNumber = "";
@@ -52,12 +51,16 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
 		if (action.equals("create")) {
 			String nextId = shortList.nextId();
 			SkySportPresenter newPresenter = new SkySportPresenter(nextId, firstName, lastName, email);
-			shortList.addPresenter(newPresenter);
-			int creRC = FileRW.writePresenterFile(dataFile, tempFile, shortList.getPresenters());
-			if (creRC == 0) {
-				success = "true";
+			if(newPresenter.isValid()) {
+				shortList.addPresenter(newPresenter);
+				int creRC = FileRW.writePresenterFile(dataFile, tempFile, shortList.getPresenters());
+				if (creRC == 0) {
+					message = firstName + " " + lastName + ", " + email + " has been successfully created";					
+				} else {
+					message = "Create Failed RC="+creRC;
+				}
 			} else {
-				System.out.println("Create Failed RC="+creRC);
+				message = "The presenter details were not valid";
 			}
 		}
 		
@@ -67,17 +70,23 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
 			while (i.hasNext()) {
 				temp = (SkySportPresenter) i.next();
 				if (temp.getId().equals(idNumber)) {
+					message = temp.getFirstName() + " " + temp.getLastName() + ", " + temp.getEmail();
+					message += " has been updated to " + firstName + " " + lastName + ", " + email;
 					temp.setFirstName(firstName);
 					temp.setLastName(lastName);
 					temp.setEmail(email);
+					temp.validate();
+					
 					break;
 				}
 			}
-			int updRC = FileRW.writePresenterFile(dataFile, tempFile, shortList.getPresenters());
-			if (updRC == 0) {
-				success = "true";
+			if (temp.isValid()) {
+				int updRC = FileRW.writePresenterFile(dataFile, tempFile, shortList.getPresenters());
+				if (updRC != 0) {
+					message = "Update Failed RC="+updRC;
+				}
 			} else {
-				System.out.println("Update Failed RC="+updRC);
+				message = "The presenter details were not valid";
 			}
 
 		}
@@ -86,8 +95,6 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
 			Iterator<SkySportPresenter> j = shortList.getPresenters().iterator();
 			while (j.hasNext()) {
 				temp = j.next();
-				System.out.println("lst object id =  "+ temp.getId());
-				System.out.println("matching against " + idNumber);
 				if (temp.getId().equals(idNumber)) {
 					j.remove();
 					break;
@@ -95,14 +102,13 @@ public class ConfirmServlet extends HttpServlet implements Servlet {
 			}
 			int delRC = FileRW.writePresenterFile(dataFile, tempFile, shortList.getPresenters());
 			if (delRC == 0) {
-				success = "true";
+				message = firstName + " " + lastName + " has been deleted";
 			} else {
-				System.out.println("Delete Failed RC="+delRC);
+				message = "Delete Failed RC="+delRC;
 			}
 		}
 
-
-		request.setAttribute("success", success);
+		request.setAttribute("message", message);
 		
 		getServletContext().getRequestDispatcher("/Confirm.jsp").forward(request, response); 
 		//super.doPost(request, response);

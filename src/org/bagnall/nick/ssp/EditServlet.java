@@ -8,9 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.bagnall.nick.fileCRUD.FileRW;
 /**
  * Possible entry route
- * action : presenters.jsp : update(n) where n is the row to update
+ * action : presenters.jsp : updatennn where nnn is the id of the record we need to edit
  * 
  * @author Nick Bagnall
  *
@@ -19,36 +21,35 @@ public class EditServlet extends HttpServlet implements Servlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("Start of Edit Servlet");
 		
-		//Retrieve Presenter List from session
-		PresenterList shortList = (PresenterList)request.getSession(true).getAttribute("presenterList");
+		//Access the presenter data file and create a list of presenters
+		String dataPath = this.getServletContext().getRealPath("/sspdata");
+		String dataFile = dataPath + "/ssp.dat";
+		PresenterList shortList = new PresenterList(); 
+		shortList.setPresenters(FileRW.readPresenterFile(dataFile));
 		
-		//Determine the action and row number to process
+		//From the action determine the record id to process
 		String action = request.getParameter("submit");
-		//System.out.println(action);
-		action = action.substring(6);
-		//System.out.println(action);
-		int item = Integer.parseInt(action);
-	
-		Iterator<SkySportPresenter> i = shortList.getPresenters().iterator();
-		SkySportPresenter tempPresenter = null;
-		int cnt = 0;
-
-		while (i.hasNext() && cnt <= item) {
-			tempPresenter = i.next();
-			cnt++;
-		}
-	
-		String idNumber = tempPresenter.getId();
-		String firstName = tempPresenter.getFirstName();
-		String lastName = tempPresenter.getLastName();
-		String email = tempPresenter.getEmail();
+		String id = action.substring(6);
 		
-		SkySportPresenter newPresenter = new SkySportPresenter(idNumber, firstName, lastName, email);
-
-		request.setAttribute("presenter", newPresenter);
+		String message = null;
+		
+		//Get the presenter details from the id passed in
+		SkySportPresenter tempPresenter = null;
+		Iterator<SkySportPresenter> i = shortList.getPresenters().iterator();
+		while (i.hasNext()) {
+			tempPresenter = i.next();
+			if (tempPresenter.getId().equals(id)) {
+				break;
+			}
+			tempPresenter = null;
+		}
+		
+		if(tempPresenter == null) {
+			message = "The specified Presenter could not be found";
+		}
+		request.setAttribute("presenter", tempPresenter);
+		request.setAttribute("message", message);
 		getServletContext().getRequestDispatcher("/Edit.jsp").forward(request, response);
 	}
 

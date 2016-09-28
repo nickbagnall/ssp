@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Object to hold list of presenters to be shown on web page
+ * also provides next available id number
+ * 
+ * @author Nick Bagnall
+ *
+ */
 public class PresenterList {
+	
 	private List<SkySportPresenter> presenters = new ArrayList<SkySportPresenter>();
 
-	/**
-	 * blank constructor
-	 */
 	public PresenterList() {
 		
 	}
@@ -25,11 +30,10 @@ public class PresenterList {
 	public void addPresenter(SkySportPresenter presenter)
 	{
 		presenters.add(presenter);
-		//List<SkySportPresenter> skySportPresenters = this.getPresenters();
 	}
 	
 	/**
-	 * Find the next available unique ID
+	 * Find the next available ID
 	 * 
 	 * @return
 	 */

@@ -1,5 +1,13 @@
 package org.bagnall.nick.ssp;
 
+/**
+ * Object to hold details of a sky sport presenter
+ * Contains utilities to parse and generate 'shortform' used in file storage  
+ * also provides self validation of details held. 
+ * 
+ * @author Nick Bagnall
+ *
+ */
 public class SkySportPresenter {
 
 	private String id;
@@ -12,6 +20,14 @@ public class SkySportPresenter {
 		
 	}
 	
+	/**
+	 * This constructor will also perform self validation of the data supplied 
+	 * 
+	 * @param id
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 */
 	public SkySportPresenter(String id, String firstName, String lastName, String email)
 	{
 		this.id = id;
@@ -43,7 +59,7 @@ public class SkySportPresenter {
 	 * @return
 	 */
 	public String getShortForm () {
-		String shortForm = id+":"+firstName+":"+lastName+":"+email;
+		String shortForm = id+"/"+firstName+"/"+lastName+"/"+email;
 		return shortForm;
 	}
 	
@@ -58,7 +74,7 @@ public class SkySportPresenter {
 		if (presenterData != null) {
 			try {
 
-				String[] values = presenterData.split(":");
+				String[] values = presenterData.split("/");
 				id = values[0];
 				firstName = values[1];
 				lastName = values[2];
@@ -67,10 +83,15 @@ public class SkySportPresenter {
 			}
 			catch (Exception e ) {
 				//Ignore because isValid already = false
+				System.out.println("Invalid presenter record");
 			}
 		}
 	}
 	
+	/**
+	 * Calls the checker for each field to validate the data in this object
+	 * @return
+	 */
 	public boolean validate() {
 		boolean valid = true;
 		if (!check(firstName, false)) {
@@ -82,10 +103,16 @@ public class SkySportPresenter {
 		if (!check(email, false)) {
 			valid = false;
 		}
-		System.out.println("Validate returns : "+ valid);
 		return valid;
 	}
 	
+	/**
+	 * Checks the supplied string adheres to the defined requirements
+	 * Matching code to the javascript
+	 * @param name
+	 * @param canBeZero
+	 * @return
+	 */
 	private boolean check(String name, boolean canBeZero){
 		if (canBeZero) {
 			if (name == null || name == "") {
