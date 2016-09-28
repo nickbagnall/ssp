@@ -45,7 +45,6 @@ public class FileRW {
 	        try {
 	            File presenterDataFile = new File(filename);
 	            if (presenterDataFile.exists()) {
-	            	System.out.println("Reading file >>" + presenterDataFile.getAbsolutePath() + "<<");
 	            	FileReader presenterFileReader = new FileReader(presenterDataFile);
 	            	BufferedReader presenterReader = new BufferedReader(presenterFileReader);
 
@@ -55,7 +54,6 @@ public class FileRW {
 	            	//Read all lines
 	            	while (presenterData != null) {
 	            		tempPresenter = new SkySportPresenter();
-	            		System.out.println("Read >>" + presenterData + "<<");
 	            		tempPresenter.parsePresenterString(presenterData);
 	            		if (tempPresenter.isValid()) {
 	            			presenterList.add(tempPresenter);

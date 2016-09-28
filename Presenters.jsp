@@ -25,12 +25,12 @@
 </nav>
 
 <article>
-<p>Sky Sport Presenter details</p>
-<c:if test="${sessionScope.presenterList eq null }">
+<h2>Sky Sport Presenter details</h2>
+<c:if test="${requestScope.presenterList eq null }">
 <p>There are no presenters on file.</p>
 </c:if>
 
-<c:if test="${sessionScope.presenterList ne null }">
+<c:if test="${requestScope.presenterList ne null }">
 <form action="/SSP/Edit" method="post" name="details">
 <table>
 <tr>
@@ -40,12 +40,12 @@
 <th class="ac"></th>
 </tr>
 <c:set var="cnt" scope="page" value="${0}"/>
-<c:forEach items="${sessionScope.presenterList.presenters}" var="presenter">
+<c:forEach items="${requestScope.presenterList.presenters}" var="presenter">
 <tr>
 <td><c:out value="${presenter.firstName}"></c:out></td>
 <td><c:out value="${presenter.lastName}"></c:out></td>
 <td><c:out value="${presenter.email}"></c:out></td>
-<td class="ac"><button type="submit" name="submit" value="update<c:out value="${cnt}"/>">Edit</button></td>
+<td class="ac"><button type="submit" name="submit" value="update<c:out value="${presenter.id}"></c:out>">Edit</button></td>
 </tr>
 <c:set var="cnt" scope="page" value="${cnt+1}"/>
 </c:forEach>
@@ -54,7 +54,7 @@
 </c:if>
 
 
-<form action="/SSP/Confirm" method="post" name="details" onsubmit="return validateCreateNew()">
+<form action="/SSP/Confirm" method="post" name="createNew" onsubmit="return validateCreateNew();">
 <table>
 <tr>
 <td class="fn"><input type="text" name="firstName" id="firstName" size="20" maxlength="25"></td>
